@@ -22,7 +22,17 @@
       "name": "game"
     },
     {
+      "name": "dragonBones"
+    },
+    {
+      "name": "socket"
+    },
+    {
       "name": "promise"
+    },
+    {
+      "name": "physics",
+      "path": "../physics"
     }
   ]
 }
