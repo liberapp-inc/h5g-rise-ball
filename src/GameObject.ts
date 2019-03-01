@@ -7,6 +7,7 @@
 
 abstract class GameObject {
     
+    
     public shape:egret.Shape = null;
     
     private static objects: GameObject[] = [];

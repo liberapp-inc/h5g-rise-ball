@@ -5,8 +5,6 @@ class Ball extends GameObject{
 
     constructor(x : number, y:number, radius:number) {
         super();
-
-        Ball.I = this;
         this.setShape(x, y, radius);
 
     }
@@ -36,6 +34,7 @@ class Ball extends GameObject{
 
     updateContent(){
 
+
     }
 
 
@@ -50,6 +49,7 @@ class PhysicsBall extends PhysicsObject{
         super();
 
         PhysicsBall.I = this;
+        this.radius = radius;
         this.setBody(x, y, radius);
         this.setShape(x, y, radius);
 
@@ -68,6 +68,48 @@ class PhysicsBall extends PhysicsObject{
 
     private setShape(x: number, y:number, radius: number){
         if( this.shape ){
+            MainCamera.display.removeChild(this.shape);        
+        }
+
+        this.shape = new egret.Shape();
+        this.shape.x = x;
+        this.shape.y = y;
+        this.shape.graphics.beginFill(0xff0000);
+        this.shape.graphics.drawCircle(0, 0, radius);
+        this.shape.graphics.endFill();
+        MainCamera.display.addChild(this.shape);
+        
+    }
+
+    updateDrowShape(x: number, y:number, radius: number){
+        this.shape.x = x;
+        this.shape.y = y;
+        MainCamera.display.addChild(this.shape);
+    }
+
+
+    updateContent(){
+        this.updateDrowShape(this.body.position[0], this.body.position[1], this.radius);
+        console.log(this.shape.y);
+                
+
+    }
+    collisionEvent(){}
+
+
+}
+
+class MyBall extends Ball{
+
+    static I:MyBall = null; 
+    constructor(x : number, y:number, radius:number) {
+        super(x , y, radius);
+        MyBall.I = this;
+
+    }
+
+    setShape(x: number, y:number, radius: number){
+        if( this.shape ){
             GameObject.display.removeChild(this.shape);        
         }
 
@@ -77,20 +119,17 @@ class PhysicsBall extends PhysicsObject{
         this.shape.graphics.beginFill(0xff0000);
         this.shape.graphics.drawCircle(0, 0, radius);
         this.shape.graphics.endFill();
-        GameObject.display.addChild(this.shape);
+        MainCamera.display.addChild(this.shape);
         
     }
 
-/*    updateDrowShape(x: number, y:number, radius: number){
-        this.shape.x = x;
-        this.shape.y = y;
-        GameObject.display.addChild(this.shape);
-    }*/
+    static touch(evt : egret.TouchEvent){
 
+    }
 
-    updateContent(){}
-    collisionEvent(){}
-
+    updateContent(){
+        
+        
+    }
 
 }
-

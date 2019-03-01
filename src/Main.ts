@@ -1,18 +1,21 @@
 class Main extends eui.UILayer {
 
+
     public constructor() {
         super();
         this.once(egret.Event.ADDED_TO_STAGE, this.addToStage, this);
     }
  
     private addToStage() {
-        GameObject.initial( this.stage );
+        GameObject.initial(this.stage);
+        //MainCamera.initial(this.stage);
         Game.init();
         egret.startTick(this.tickLoop, this);
     }
 
     tickLoop(timeStamp:number):boolean{
         GameObject.update();
+        CreateWorld.worldBegin(timeStamp)
         return false;
     }
 
@@ -28,6 +31,11 @@ class Game{
         this.width  = egret.MainContext.instance.stage.stageWidth;
         
         /* new メソッドを記入*/
+        new MainCamera();
+        new CreateWorld();
+        new PhysicsBall(300,0,50);
+        new PhysicsBox(300,700, 100, 50, 0xff0000);
+
     }
 
 
@@ -56,6 +64,7 @@ class CreateWorld extends PhysicsObject{
     constructor() {
         super();
         CreateWorld.I = this;
+        this.createWorld();
         CreateWorld.world.on("beginContact",  this.collision, this);
 
     }

@@ -1,22 +1,24 @@
 class Box extends GameObject{
     
-    constructor(boxPositionX : number, boxPositionY : number, boxWidth : number, boxHeight : number, boxColor:number) {
+    constructor(x : number, y : number, width : number, height : number, color:number) {
         super();
-        this.setShape(boxWidth, boxHeight, boxWidth, boxHeight, boxColor);
+        this.setShape(x, y, width, height, color);
 
 
     }
 
-    setShape(boxPositionX : number, boxPositionY : number, boxWidth : number, boxHeight : number, boxColor:number){
+    
+
+    setShape(x : number, y : number, width : number, height : number, color:number){
         if( this.shape ){
             GameObject.display.removeChild(this.shape);        
         }
 
         this.shape = new egret.Shape();
-        this.shape.x = boxPositionX;
-        this.shape.y = boxPositionY;
-        this.shape.graphics.beginFill(boxColor);
-        this.shape.graphics.drawRect(0, 0, boxWidth , boxHeight);
+        this.shape.x = x;
+        this.shape.y = y;
+        this.shape.graphics.beginFill(color);
+        this.shape.graphics.drawRect(0, 0, width , height);
         this.shape.graphics.endFill();
         GameObject.display.addChild(this.shape);
         
@@ -37,19 +39,29 @@ class PhysicsBox extends PhysicsObject{
     static boxMove : boolean = false;
     static blockdownSpeed : number = 3;
     
-    constructor(boxPositionX : number, boxPositionY : number, boxWidth : number, boxHeight : number, boxColor:number) {
+    constructor(x : number, y : number, width : number, height : number, color:number) {
         super();
-        this.boxPositionX = boxPositionX;
-        this.boxPositionY = boxPositionY;
-        this.boxWidth = boxWidth ;
-        this.boxHeight =boxHeight;
-        this.boxColor = boxColor;
+        this.boxPositionX = x;
+        this.boxPositionY = y;
+        this.boxWidth = width ;
+        this.boxHeight =height;
+        this.boxColor = color;
+        this.setBody(x,y, width, height);
         this.setShape(this.boxWidth, this.boxHeight);
 
 
     }
 
+    private setBody(x : number, y : number, width : number, height : number){
 
+        this.body = new p2.Body({mass : 1, position:[x,y], type:p2.Body.STATIC});
+        this.bodyShape = new p2.Box({
+            width : width, height: height, fixedRotation:true, 
+        });
+        this.body.addShape(this.bodyShape);
+        CreateWorld.world.addBody(this.body);
+        
+    }
 
     setShape(width: number, height : number){
         if( this.shape ){
@@ -59,6 +71,8 @@ class PhysicsBox extends PhysicsObject{
         this.shape = new egret.Shape();
         this.shape.anchorOffsetX += width/2;
         this.shape.anchorOffsetY += height/2;
+        this.shape.x = this.body.position[0];
+        this.shape.y = this.body.position[1];
         this.shape.graphics.beginFill(this.boxColor);
         this.shape.graphics.drawRect(0, 0, width , height);
         this.shape.graphics.endFill();
@@ -69,4 +83,12 @@ class PhysicsBox extends PhysicsObject{
     updateContent(){}
     collisionEvent(){}
 
+}
+
+
+class MyBox extends Box {
+
+    constructor(x : number, y : number, width : number, height : number, color:number){
+        super(x,y, width, height, color);
+    }
 }
