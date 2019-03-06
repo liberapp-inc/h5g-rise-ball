@@ -43,8 +43,9 @@ var PhysicsBall = (function (_super) {
     __extends(PhysicsBall, _super);
     function PhysicsBall(x, y, radius) {
         var _this = _super.call(this) || this;
+        //static I:PhysicsBall = null;   // singleton instance
         _this.radius = null;
-        PhysicsBall.I = _this;
+        //PhysicsBall.I = this;
         _this.radius = radius;
         _this.setBody(x, y, radius);
         _this.setShape(x, y, radius);
@@ -60,39 +61,6 @@ var PhysicsBall = (function (_super) {
     };
     PhysicsBall.prototype.setShape = function (x, y, radius) {
         if (this.shape) {
-            MainCamera.display.removeChild(this.shape);
-        }
-        this.shape = new egret.Shape();
-        this.shape.x = x;
-        this.shape.y = y;
-        this.shape.graphics.beginFill(0xff0000);
-        this.shape.graphics.drawCircle(0, 0, radius);
-        this.shape.graphics.endFill();
-        MainCamera.display.addChild(this.shape);
-    };
-    PhysicsBall.prototype.updateDrowShape = function (x, y, radius) {
-        this.shape.x = x;
-        this.shape.y = y;
-        MainCamera.display.addChild(this.shape);
-    };
-    PhysicsBall.prototype.updateContent = function () {
-        this.updateDrowShape(this.body.position[0], this.body.position[1], this.radius);
-        console.log(this.shape.y);
-    };
-    PhysicsBall.prototype.collisionEvent = function () { };
-    PhysicsBall.I = null; // singleton instance
-    return PhysicsBall;
-}(PhysicsObject));
-__reflect(PhysicsBall.prototype, "PhysicsBall");
-var MyBall = (function (_super) {
-    __extends(MyBall, _super);
-    function MyBall(x, y, radius) {
-        var _this = _super.call(this, x, y, radius) || this;
-        MyBall.I = _this;
-        return _this;
-    }
-    MyBall.prototype.setShape = function (x, y, radius) {
-        if (this.shape) {
             GameObject.display.removeChild(this.shape);
         }
         this.shape = new egret.Shape();
@@ -101,14 +69,35 @@ var MyBall = (function (_super) {
         this.shape.graphics.beginFill(0xff0000);
         this.shape.graphics.drawCircle(0, 0, radius);
         this.shape.graphics.endFill();
-        MainCamera.display.addChild(this.shape);
+        GameObject.display.addChild(this.shape);
     };
+    PhysicsBall.prototype.updateDrowShape = function (x, y, radius) {
+        this.shape.x = x;
+        this.shape.y = y;
+        GameObject.display.addChild(this.shape);
+    };
+    return PhysicsBall;
+}(PhysicsObject));
+__reflect(PhysicsBall.prototype, "PhysicsBall");
+var MyBall = (function (_super) {
+    __extends(MyBall, _super);
+    function MyBall(x, y, radius) {
+        var _this = _super.call(this, x, y, radius) || this;
+        MyBall.I = _this;
+        GameObject.display.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function (e) { return MyBall.touch(e); }, false);
+        return _this;
+    }
     MyBall.touch = function (evt) {
+        if (Game.gameOverFlag == false) {
+            MyBall.I.body.applyForce([0, -5000], [0, 0]);
+        }
     };
     MyBall.prototype.updateContent = function () {
+        this.updateDrowShape(this.body.position[0], this.body.position[1], this.radius);
     };
+    MyBall.prototype.collisionEvent = function () { };
     MyBall.I = null;
     return MyBall;
-}(Ball));
+}(PhysicsBall));
 __reflect(MyBall.prototype, "MyBall");
 //# sourceMappingURL=Ball.js.map

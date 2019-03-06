@@ -40,22 +40,22 @@ class Ball extends GameObject{
 
 }
 
-class PhysicsBall extends PhysicsObject{
+abstract class PhysicsBall extends PhysicsObject{
 
-    static I:PhysicsBall = null;   // singleton instance
-    private radius :number =null;
+    //static I:PhysicsBall = null;   // singleton instance
+    protected radius :number =null;
 
     constructor(x : number, y:number, radius:number) {
         super();
 
-        PhysicsBall.I = this;
+        //PhysicsBall.I = this;
         this.radius = radius;
         this.setBody(x, y, radius);
         this.setShape(x, y, radius);
 
     }
 
-    private setBody(x: number, y:number, radius: number){
+    protected setBody(x: number, y:number, radius: number){
 
         this.body = new p2.Body({mass : 1, position:[x,y]});
         this.bodyShape = new p2.Circle({
@@ -66,49 +66,7 @@ class PhysicsBall extends PhysicsObject{
         
     }
 
-    private setShape(x: number, y:number, radius: number){
-        if( this.shape ){
-            MainCamera.display.removeChild(this.shape);        
-        }
-
-        this.shape = new egret.Shape();
-        this.shape.x = x;
-        this.shape.y = y;
-        this.shape.graphics.beginFill(0xff0000);
-        this.shape.graphics.drawCircle(0, 0, radius);
-        this.shape.graphics.endFill();
-        MainCamera.display.addChild(this.shape);
-        
-    }
-
-    updateDrowShape(x: number, y:number, radius: number){
-        this.shape.x = x;
-        this.shape.y = y;
-        MainCamera.display.addChild(this.shape);
-    }
-
-
-    updateContent(){
-        this.updateDrowShape(this.body.position[0], this.body.position[1], this.radius);
-        console.log(this.shape.y);
-                
-
-    }
-    collisionEvent(){}
-
-
-}
-
-class MyBall extends Ball{
-
-    static I:MyBall = null; 
-    constructor(x : number, y:number, radius:number) {
-        super(x , y, radius);
-        MyBall.I = this;
-
-    }
-
-    setShape(x: number, y:number, radius: number){
+    protected setShape(x: number, y:number, radius: number){
         if( this.shape ){
             GameObject.display.removeChild(this.shape);        
         }
@@ -119,17 +77,45 @@ class MyBall extends Ball{
         this.shape.graphics.beginFill(0xff0000);
         this.shape.graphics.drawCircle(0, 0, radius);
         this.shape.graphics.endFill();
-        MainCamera.display.addChild(this.shape);
+        GameObject.display.addChild(this.shape);
         
     }
 
-    static touch(evt : egret.TouchEvent){
+    updateDrowShape(x: number, y:number, radius: number){
+        this.shape.x = x;
+        this.shape.y = y;
+        GameObject.display.addChild(this.shape);
+    }
 
+
+/*    updateContent(){}
+    collisionEvent(){}*/
+
+
+}
+
+class MyBall extends PhysicsBall{
+
+    static I : MyBall = null; 
+    constructor(x : number, y:number, radius:number) {
+        super(x , y, radius);
+        MyBall.I = this;
+        GameObject.display.addEventListener(egret.TouchEvent.TOUCH_BEGIN, (e: egret.TouchEvent) => MyBall.touch(e), false);
+
+    }
+
+
+    static touch(evt : egret.TouchEvent){
+        if(Game.gameOverFlag == false){
+            MyBall.I.body.applyForce([0,-5000],[0,0]);
+
+        }
     }
 
     updateContent(){
-        
-        
+        this.updateDrowShape(this.body.position[0], this.body.position[1], this.radius);
     }
+
+    collisionEvent(){}
 
 }

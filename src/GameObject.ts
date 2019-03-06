@@ -72,8 +72,8 @@ abstract class GameObject {
 abstract class PhysicsObject extends GameObject{
 
     protected body : p2.Body = null;
-    protected bodyShape : p2.Circle | p2.Box = null;
-    protected static world : p2.World = null;
+    protected bodyShape : p2.Circle | p2.Box | p2.Line= null;
+    static world : p2.World = null;
 
     constructor(){
         super();
@@ -85,6 +85,7 @@ abstract class PhysicsObject extends GameObject{
     addDestroyMethod(){
         CreateWorld.world.removeBody(this.body);
     }
+    
 
 
 }

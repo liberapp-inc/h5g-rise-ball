@@ -35,12 +35,16 @@ var Game = (function () {
     Game.init = function () {
         this.height = egret.MainContext.instance.stage.stageHeight;
         this.width = egret.MainContext.instance.stage.stageWidth;
+        Game.gameOverFlag = false;
         /* new メソッドを記入*/
-        new MainCamera();
+        new Background();
+        new MoveDisplay();
         new CreateWorld();
-        new PhysicsBall(300, 0, 50);
-        new PhysicsBox(300, 700, 100, 50, 0xff0000);
+        new MyBall(Game.width / 2, Game.height - 50, 50);
+        new CreateObject();
+        new Score();
     };
+    Game.gameOverFlag = false;
     return Game;
 }());
 __reflect(Game.prototype, "Game");
@@ -49,8 +53,8 @@ var Background = (function (_super) {
     function Background() {
         var _this = _super.call(this) || this;
         _this.shape = new egret.Shape();
-        _this.shape.graphics.beginFill(0x00c0e0);
-        _this.shape.graphics.drawRect(0, 0, Utility.width, Utility.height);
+        _this.shape.graphics.beginFill(0x000080);
+        _this.shape.graphics.drawRect(0, 0, Game.width, Game.height);
         _this.shape.graphics.endFill();
         GameObject.display.addChild(_this.shape);
         return _this;
@@ -74,11 +78,21 @@ var CreateWorld = (function (_super) {
         CreateWorld.world.gravity = [0, 9.8];
     };
     CreateWorld.worldBegin = function (dt) {
-        CreateWorld.world.step(1 / 60, dt / 1000, 10);
+        if (Game.gameOverFlag == false) {
+            CreateWorld.world.step(1 / 60, dt / 1000, 10);
+        }
         return false;
     };
     //コリジョンイベントはここにまとめる
     CreateWorld.prototype.collision = function (evt) {
+        /*        const bodyA: PhysicsObject = evt.bodyA;
+                const bodyB: PhysicsObject = evt.bodyB;
+                const shapeA : PhysicsObject = evt.shapeA;
+                const shapeB : PhysicsObject = evt.shapeB;*/
+        Game.gameOverFlag = true;
+        if (Game.gameOverFlag === true) {
+            new GameOver();
+        }
     };
     CreateWorld.prototype.addDestroyMethod = function () { CreateWorld.world.clear(); };
     CreateWorld.prototype.updateContent = function () { };
@@ -87,4 +101,27 @@ var CreateWorld = (function (_super) {
     return CreateWorld;
 }(PhysicsObject));
 __reflect(CreateWorld.prototype, "CreateWorld");
+var CreateObject = (function (_super) {
+    __extends(CreateObject, _super);
+    function CreateObject() {
+        var _this = _super.call(this) || this;
+        _this.box = [];
+        _this.createBox();
+        return _this;
+    }
+    CreateObject.prototype.createBox = function () {
+        for (var i = 0; i < 2; i++) {
+            var posY = Game.height / 2;
+            var rb = new RightBox(Game.width, posY * i, 300, 50, 0xff0000);
+            var lb = new LeftBox(0, posY * i, 300, 50, 0xff0000);
+            var l = new ScoreLine(Game.width / 2, posY * i, Game.width, 0, 0xff0000);
+            this.box.push(rb);
+            this.box.push(lb);
+            this.box.push(l);
+        }
+    };
+    CreateObject.prototype.updateContent = function () { };
+    return CreateObject;
+}(GameObject));
+__reflect(CreateObject.prototype, "CreateObject");
 //# sourceMappingURL=Main.js.map

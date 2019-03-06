@@ -21,13 +21,40 @@ var MainCamera = (function (_super) {
         MainCamera.display = displayObjectContainer;
     };
     MainCamera.prototype.updateContent = function () {
-        /*        MainCamera.display.anchorOffsetX = PhysicsBall.I.shape.anchorOffsetX;
-                MainCamera.display.anchorOffsetY = PhysicsBall.I.shape.anchorOffsetY;
-                MainCamera.display.x = PhysicsBall.I.shape.x;
-                MainCamera.display.y = PhysicsBall.I.shape.y;*/
     };
     MainCamera.I = null;
     return MainCamera;
 }(GameObject));
 __reflect(MainCamera.prototype, "MainCamera");
+var MoveDisplay = (function (_super) {
+    __extends(MoveDisplay, _super);
+    function MoveDisplay() {
+        var _this = _super.call(this) || this;
+        MoveDisplay.I = _this;
+        MoveDisplay.display = new egret.DisplayObjectContainer();
+        GameObject.display.addChild(MoveDisplay.display);
+        MoveDisplay.moveSpeed[0] = 0;
+        MoveDisplay.moveSpeed[1] = 2;
+        return _this;
+    }
+    MoveDisplay.initial = function (displayObjectContainer) {
+        MoveDisplay.display = displayObjectContainer;
+    };
+    MoveDisplay.move = function (x, y) {
+        MoveDisplay.display.x += x;
+        MoveDisplay.display.y += y;
+        if (MoveDisplay.display.y > Game.height) {
+            MoveDisplay.display.y = 0;
+        }
+    };
+    MoveDisplay.prototype.updateContent = function () {
+        if (Game.gameOverFlag == false) {
+            MoveDisplay.move(MoveDisplay.moveSpeed[0], MoveDisplay.moveSpeed[1]);
+        }
+    };
+    MoveDisplay.I = null;
+    MoveDisplay.moveSpeed = [];
+    return MoveDisplay;
+}(GameObject));
+__reflect(MoveDisplay.prototype, "MoveDisplay");
 //# sourceMappingURL=Camera.js.map

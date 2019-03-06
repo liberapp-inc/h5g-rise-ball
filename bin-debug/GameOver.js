@@ -14,9 +14,13 @@ var GameOver = (function (_super) {
         var _this = _super.call(this) || this;
         _this.textGameOver = null;
         _this.textScore = null;
-        _this.textGameOver = Utility.myText(0, 0, "GAME OVER", 100, 0.5, 0x0080ff, true);
+        _this.textGameOver = Utility.myText(Game.width / 2, Game.height / 2 - 50, "GAME OVER", 100, 0.5, 0x0080ff, true);
+        _this.textGameOver.anchorOffsetX = _this.textGameOver.width / 2;
+        _this.textGameOver.anchorOffsetY = _this.textGameOver.height / 2;
         GameObject.display.addChild(_this.textGameOver);
-        _this.textScore = Utility.myText(0, 0, "GAME OVER", 100, 0.5, 0x0080ff, true);
+        _this.textScore = Utility.myText(Game.width / 2, Game.height / 2 + 50, "GAME OVER", 100, 0.5, 0x0080ff, true);
+        _this.textScore.anchorOffsetX = _this.textScore.width / 2;
+        _this.textScore.anchorOffsetY = _this.textScore.height / 2;
         GameObject.display.addChild(_this.textScore);
         GameObject.display.once(egret.TouchEvent.TOUCH_TAP, function (e) { return _this.tap(e); }, _this);
         return _this;
@@ -29,6 +33,7 @@ var GameOver = (function (_super) {
     };
     GameOver.prototype.updateContent = function () { };
     GameOver.prototype.tap = function (e) {
+        GameObject.display.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, function (e) { return MyBall.touch(e); }, false);
         GameObject.transit = Game.init;
         this.destroy();
     };
