@@ -127,9 +127,14 @@ class MyBox extends PhysicsBox {
     protected updateBodyShape(){
         this.body.position[0] += MoveDisplay.moveSpeed[0];
         this.body.position[1] += MoveDisplay.moveSpeed[1];
-        if(MoveDisplay.display.y == -1){
-            this.body.position[1] -= Game.height;
+        this.shape.x = this.body.position[0];
+        this.shape.y = this.body.position[1];
+        MoveDisplay.display.addChild(this.shape);
+        if(this.shape.y > 2 * Game.height){
+            this.body.position[1] -= Game.height*3;
         }
+        
+        
 
     }
     

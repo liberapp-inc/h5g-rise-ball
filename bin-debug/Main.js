@@ -139,11 +139,11 @@ var CreateObject = (function (_super) {
         return _this;
     }
     CreateObject.prototype.createBox = function () {
-        for (var i = 0; i < 2; i++) {
+        for (var i = 0; i < 6; i++) {
             var posY = Game.height / 2;
-            var rb = new RightBox(Game.width, posY * i, 300, 50, 0xff0000);
-            var lb = new LeftBox(0, posY * i, 300, 50, 0xff0000);
-            var l = new ScoreLine(Game.width / 2, posY * i, Game.width, 0, 0xff0000);
+            var rb = new RightBox(Game.width, -2 * Game.height + posY * i, 300, 50, 0xff0000);
+            var lb = new LeftBox(0, -2 * Game.height + posY * i, 300, 50, 0xff0000);
+            var l = new ScoreLine(Game.width / 2, -2 * Game.height + posY * i, Game.width, 0, 0xff0000);
             this.box.push(rb);
             this.box.push(lb);
             this.box.push(l);

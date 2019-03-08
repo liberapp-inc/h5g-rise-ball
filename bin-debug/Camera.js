@@ -49,7 +49,7 @@ var MoveDisplay = (function (_super) {
     };
     MoveDisplay.prototype.updateContent = function () {
         if (Game.gameOverFlag == false) {
-            MoveDisplay.move(MoveDisplay.moveSpeed[0], MoveDisplay.moveSpeed[1]);
+            //MoveDisplay.move(MoveDisplay.moveSpeed[0], MoveDisplay.moveSpeed[1]);
         }
     };
     MoveDisplay.I = null;

@@ -130,6 +130,7 @@ class CreateWorld extends PhysicsObject{
         //BallとLineがぶつかったらスコア加算
         else if(myShape.collisionGroup == GraphicShape.CIECLE && yourShape.collisionGroup == GraphicShape.LINE){
             Score.I.addScore();
+          
         }
         else if(yourShape.collisionGroup == GraphicShape.CIECLE && myShape.collisionGroup == GraphicShape.LINE){
             Score.I.addScore();
@@ -159,11 +160,11 @@ class CreateObject extends GameObject{
     }
 
     createBox(){
-        for(let i = 0; i < 2; i++){
+        for(let i = 0; i < 6; i++){
             let posY = Game.height/2
-            let rb = new RightBox(Game.width,posY *i, 300, 50, 0xff0000);
-            let lb = new LeftBox(0,posY *i, 300, 50, 0xff0000);
-            let l = new ScoreLine(Game.width/2, posY*i,Game.width,0, 0xff0000);
+            let rb = new RightBox(Game.width,-2 * Game.height + posY *i, 300, 50, 0xff0000);
+            let lb = new LeftBox(0, - 2 *Game.height + posY *i, 300, 50, 0xff0000);
+            let l = new ScoreLine(Game.width/2, -2 * Game.height + posY*i,Game.width,0, 0xff0000);
             this.box.push(rb);
             this.box.push(lb);
             this.box.push(l);
