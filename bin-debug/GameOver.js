@@ -18,7 +18,7 @@ var GameOver = (function (_super) {
         _this.textGameOver.anchorOffsetX = _this.textGameOver.width / 2;
         _this.textGameOver.anchorOffsetY = _this.textGameOver.height / 2;
         GameObject.display.addChild(_this.textGameOver);
-        _this.textScore = Utility.myText(Game.width / 2, Game.height / 2 + 50, "GAME OVER", 100, 0.5, 0x0080ff, true);
+        _this.textScore = Utility.myText(Game.width / 2, Game.height / 2 + 50, "SCORE : " + Score.I.score, 100, 0.5, 0x0080ff, true);
         _this.textScore.anchorOffsetX = _this.textScore.width / 2;
         _this.textScore.anchorOffsetY = _this.textScore.height / 2;
         GameObject.display.addChild(_this.textScore);

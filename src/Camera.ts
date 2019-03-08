@@ -48,7 +48,7 @@ class MoveDisplay extends GameObject{
         MoveDisplay.display.y += y;
 
         if(MoveDisplay.display.y > Game.height){
-            MoveDisplay.display.y = 0;
+            MoveDisplay.display.y = -1;
         }
         
     }

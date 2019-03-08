@@ -56,7 +56,7 @@ abstract class PhysicsBox extends PhysicsObject{
 
         this.body = new p2.Body({mass : 1, position:[x,y], type:p2.Body.STATIC});
         this.bodyShape = new p2.Box({
-            width : width, height: height, fixedRotation:true, 
+            width : width, height: height, fixedRotation:true, collisionGroup: GraphicShape.BOX, collisionMask:GraphicShape.CIECLE
         });
         this.body.addShape(this.bodyShape);
         CreateWorld.world.addBody(this.body);
@@ -127,6 +127,9 @@ class MyBox extends PhysicsBox {
     protected updateBodyShape(){
         this.body.position[0] += MoveDisplay.moveSpeed[0];
         this.body.position[1] += MoveDisplay.moveSpeed[1];
+        if(MoveDisplay.display.y == -1){
+            this.body.position[1] -= Game.height;
+        }
 
     }
     

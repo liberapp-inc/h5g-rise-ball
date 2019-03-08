@@ -8,6 +8,15 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
+//衝突判定用の列挙
+var GraphicShape;
+(function (GraphicShape) {
+    GraphicShape[GraphicShape["NONE"] = Math.pow(2, 0)] = "NONE";
+    GraphicShape[GraphicShape["CIECLE"] = Math.pow(2, 1)] = "CIECLE";
+    GraphicShape[GraphicShape["BOX"] = Math.pow(2, 2)] = "BOX";
+    GraphicShape[GraphicShape["LINE"] = Math.pow(2, 3)] = "LINE";
+    GraphicShape[GraphicShape["DEAD_LINE"] = Math.pow(2, 4)] = "DEAD_LINE";
+})(GraphicShape || (GraphicShape = {}));
 var Main = (function (_super) {
     __extends(Main, _super);
     function Main() {
@@ -85,13 +94,33 @@ var CreateWorld = (function (_super) {
     };
     //コリジョンイベントはここにまとめる
     CreateWorld.prototype.collision = function (evt) {
-        /*        const bodyA: PhysicsObject = evt.bodyA;
-                const bodyB: PhysicsObject = evt.bodyB;
-                const shapeA : PhysicsObject = evt.shapeA;
-                const shapeB : PhysicsObject = evt.shapeB;*/
-        Game.gameOverFlag = true;
-        if (Game.gameOverFlag === true) {
-            new GameOver();
+        var bodyA = evt.bodyA;
+        var bodyB = evt.bodyB;
+        var shapeA = evt.shapeA;
+        var shapeB = evt.shapeB;
+        this.checkShape(shapeA, shapeB);
+    };
+    CreateWorld.prototype.checkShape = function (myShape, yourShape) {
+        //BallとBoxがぶつかったらゲームオーバー
+        if (myShape.collisionGroup == GraphicShape.CIECLE && yourShape.collisionGroup == GraphicShape.BOX) {
+            Game.gameOverFlag = true;
+            if (Game.gameOverFlag === true) {
+                new GameOver();
+            }
+        }
+        else if (yourShape.collisionGroup == GraphicShape.CIECLE && myShape.collisionGroup == GraphicShape.BOX) {
+            Game.gameOverFlag = true;
+            if (Game.gameOverFlag === true) {
+                new GameOver();
+            }
+        }
+        else if (myShape.collisionGroup == GraphicShape.CIECLE && yourShape.collisionGroup == GraphicShape.LINE) {
+            Score.I.addScore();
+        }
+        else if (yourShape.collisionGroup == GraphicShape.CIECLE && myShape.collisionGroup == GraphicShape.LINE) {
+            Score.I.addScore();
+        }
+        else {
         }
     };
     CreateWorld.prototype.addDestroyMethod = function () { CreateWorld.world.clear(); };

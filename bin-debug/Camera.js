@@ -44,7 +44,7 @@ var MoveDisplay = (function (_super) {
         MoveDisplay.display.x += x;
         MoveDisplay.display.y += y;
         if (MoveDisplay.display.y > Game.height) {
-            MoveDisplay.display.y = 0;
+            MoveDisplay.display.y = -1;
         }
     };
     MoveDisplay.prototype.updateContent = function () {

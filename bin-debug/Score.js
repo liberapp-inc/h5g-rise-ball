@@ -43,6 +43,9 @@ var Score = (function (_super) {
             this.textBest.text = "BEST : " + this.score.toFixed();
         }
     };
+    Score.prototype.addScore = function () {
+        this.score += 1;
+    };
     Score.I = null; // singleton instance
     return Score;
 }(GameObject));

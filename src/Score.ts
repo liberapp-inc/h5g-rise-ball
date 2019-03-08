@@ -41,5 +41,10 @@ class Score extends GameObject{
         }
     }
 
+    addScore(){
+        this.score += 1;
+        
+    }
+
 
 }

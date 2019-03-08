@@ -24,6 +24,13 @@ abstract class PhysicsLine extends PhysicsObject{
         this.bodyShape = new p2.Line({
             length : length
         });
+        //なぜか上のbodyShapeの中にまとめて記述するとエラーがでたのでここに記載。
+        this.bodyShape.angle = angle;
+        this.bodyShape.collisionGroup = GraphicShape.LINE;
+        this.bodyShape.collisionMask = GraphicShape.CIECLE;
+        this.bodyShape.sensor = true;
+
+
         this.body.addShape(this.bodyShape);
         CreateWorld.world.addBody(this.body);
         
@@ -71,7 +78,6 @@ class ScoreLine extends PhysicsLine {
         this.shape.graphics.moveTo(Game.width,0);
         this.shape.graphics.lineTo(0, 0);
         MoveDisplay.display.addChild(this.shape);
-        console.log( this.shape);
         
     }
 
@@ -79,6 +85,9 @@ class ScoreLine extends PhysicsLine {
     protected updateBodyShape(){
         this.body.position[0] += MoveDisplay.moveSpeed[0];
         this.body.position[1] += MoveDisplay.moveSpeed[1];
+        if(MoveDisplay.display.y == -1){
+            this.body.position[1] -= Game.height;
+        }
 
     }
     
@@ -92,6 +101,7 @@ class ScoreLine extends PhysicsLine {
 
     updateContent(){
         this.updateBodyShape();
+        
     }
     collisionEvent(){}
 }

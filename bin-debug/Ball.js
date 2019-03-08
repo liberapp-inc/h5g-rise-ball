@@ -54,7 +54,7 @@ var PhysicsBall = (function (_super) {
     PhysicsBall.prototype.setBody = function (x, y, radius) {
         this.body = new p2.Body({ mass: 1, position: [x, y] });
         this.bodyShape = new p2.Circle({
-            radius: radius, fixedRotation: true
+            radius: radius, fixedRotation: true, collisionGroup: GraphicShape.CIECLE, collisionMask: GraphicShape.BOX | GraphicShape.LINE | GraphicShape.DEAD_LINE
         });
         this.body.addShape(this.bodyShape);
         CreateWorld.world.addBody(this.body);
@@ -84,12 +84,14 @@ var MyBall = (function (_super) {
     function MyBall(x, y, radius) {
         var _this = _super.call(this, x, y, radius) || this;
         MyBall.I = _this;
-        GameObject.display.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function (e) { return MyBall.touch(e); }, false);
+        //removedEventListenerしてもremoveされずに重複することがあるので、hasEventでEventがないときのみ実行
+        if (GameObject.display.hasEventListener(egret.TouchEvent.TOUCH_BEGIN) == false)
+            GameObject.display.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function (e) { return MyBall.touch(e); }, false);
         return _this;
     }
     MyBall.touch = function (evt) {
         if (Game.gameOverFlag == false) {
-            MyBall.I.body.applyForce([0, -5000], [0, 0]);
+            MyBall.I.body.applyForceLocal([0, -5000], [0, 0]);
         }
     };
     MyBall.prototype.updateContent = function () {

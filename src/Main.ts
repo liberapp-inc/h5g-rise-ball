@@ -1,3 +1,12 @@
+//衝突判定用の列挙
+enum GraphicShape{
+    NONE = Math.pow(2,0),
+    CIECLE = Math.pow(2,1),
+    BOX = Math.pow(2,2),
+    LINE = Math.pow(2,3),
+    DEAD_LINE = Math.pow(2,4),
+}
+
 class Main extends eui.UILayer {
 
 
@@ -89,16 +98,47 @@ class CreateWorld extends PhysicsObject{
 
     //コリジョンイベントはここにまとめる
     private collision(evt : any){
-/*        const bodyA: PhysicsObject = evt.bodyA;
+        const bodyA: PhysicsObject = evt.bodyA;
         const bodyB: PhysicsObject = evt.bodyB;
-        const shapeA : PhysicsObject = evt.shapeA;
-        const shapeB : PhysicsObject = evt.shapeB;*/
+        const shapeA : p2.Shape = evt.shapeA;
+        const shapeB : p2.Shape = evt.shapeB;
 
-        Game.gameOverFlag = true;
-        if(Game.gameOverFlag === true){
+        this.checkShape(shapeA, shapeB);
+        
 
-            new GameOver();
+
+    }
+
+    checkShape(myShape :p2.Shape, yourShape : p2.Shape){
+
+        //BallとBoxがぶつかったらゲームオーバー
+        if(myShape.collisionGroup == GraphicShape.CIECLE && yourShape.collisionGroup == GraphicShape.BOX){
+            Game.gameOverFlag = true;
+            if(Game.gameOverFlag === true){
+
+                new GameOver();
+            }
+
         }
+        else if(yourShape.collisionGroup == GraphicShape.CIECLE && myShape.collisionGroup == GraphicShape.BOX){
+            Game.gameOverFlag = true;
+            if(Game.gameOverFlag === true){
+
+                new GameOver();
+            }
+        }
+        //BallとLineがぶつかったらスコア加算
+        else if(myShape.collisionGroup == GraphicShape.CIECLE && yourShape.collisionGroup == GraphicShape.LINE){
+            Score.I.addScore();
+        }
+        else if(yourShape.collisionGroup == GraphicShape.CIECLE && myShape.collisionGroup == GraphicShape.LINE){
+            Score.I.addScore();
+        }
+        else{
+
+        }
+
+
 
     }
 
