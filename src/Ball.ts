@@ -96,7 +96,8 @@ abstract class PhysicsBall extends PhysicsObject{
 
 class MyBall extends PhysicsBall{
 
-    static I : MyBall = null; 
+    static I : MyBall = null;
+    static collisionFlag :boolean = false; 
     constructor(x : number, y:number, radius:number) {
         super(x , y, radius);
         MyBall.I = this;
@@ -119,6 +120,7 @@ class MyBall extends PhysicsBall{
         this.updateDrowShape(this.body.position[0], this.body.position[1], this.radius);
     }
 
-    collisionEvent(){}
+
+
 
 }

@@ -61,6 +61,9 @@ abstract class PhysicsLine extends PhysicsObject{
 }
 
 class ScoreLine extends PhysicsLine {
+
+    public collisionFlag:boolean = false;
+
     constructor(x : number, y : number, length : number, angle : number, color:number){
         super(x, y, length, angle, color);
     }
@@ -91,6 +94,10 @@ class ScoreLine extends PhysicsLine {
 
         if(this.shape.y  > 2 *Game.height){
             this.body.position[1] -= Game.height*3;
+            
+            if(this.bodyShape.collisionMask == null){
+                this.bodyShape.collisionMask = GraphicShape.CIECLE;
+            }
         }
 
     }
@@ -110,4 +117,5 @@ class ScoreLine extends PhysicsLine {
        
     }
     collisionEvent(){}
+    
 }

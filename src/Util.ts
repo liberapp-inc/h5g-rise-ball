@@ -1,6 +1,6 @@
-// ゲームで便利に使えるUtilityクラス
+// ゲームで便利に使えるUtilクラス
 
-class Utility{
+class Util{
 
     public static height: number;
     public static width: number;

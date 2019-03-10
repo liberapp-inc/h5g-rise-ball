@@ -26,7 +26,7 @@ var Main = (function (_super) {
     }
     Main.prototype.addToStage = function () {
         GameObject.initial(this.stage);
-        //MainCamera.initial(this.stage);
+        Util.init(this); //euiレイヤーのサイズの取得
         Game.init();
         egret.startTick(this.tickLoop, this);
     };
@@ -49,8 +49,8 @@ var Game = (function () {
         new Background();
         new MoveDisplay();
         new CreateWorld();
-        new MyBall(Game.width / 2, Game.height - 50, 50);
         new CreateObject();
+        new MyBall(Game.width / 2, Game.height - 50, 50);
         new Score();
     };
     Game.gameOverFlag = false;
@@ -79,6 +79,7 @@ var CreateWorld = (function (_super) {
         CreateWorld.I = _this;
         _this.createWorld();
         CreateWorld.world.on("beginContact", _this.collision, _this);
+        CreateWorld.world.on("endContact", _this.collisionEnd, _this);
         return _this;
     }
     CreateWorld.prototype.createWorld = function () {
@@ -100,32 +101,35 @@ var CreateWorld = (function (_super) {
         var shapeB = evt.shapeB;
         this.checkShape(shapeA, shapeB);
     };
+    CreateWorld.prototype.collisionEnd = function () {
+    };
     CreateWorld.prototype.checkShape = function (myShape, yourShape) {
         //BallとBoxがぶつかったらゲームオーバー
         if (myShape.collisionGroup == GraphicShape.CIECLE && yourShape.collisionGroup == GraphicShape.BOX) {
             Game.gameOverFlag = true;
-            if (Game.gameOverFlag === true) {
+            if (Game.gameOverFlag) {
                 new GameOver();
             }
         }
         else if (yourShape.collisionGroup == GraphicShape.CIECLE && myShape.collisionGroup == GraphicShape.BOX) {
             Game.gameOverFlag = true;
-            if (Game.gameOverFlag === true) {
+            if (Game.gameOverFlag) {
                 new GameOver();
             }
         }
         else if (myShape.collisionGroup == GraphicShape.CIECLE && yourShape.collisionGroup == GraphicShape.LINE) {
             Score.I.addScore();
+            yourShape.collisionMask = GraphicShape.NONE;
         }
         else if (yourShape.collisionGroup == GraphicShape.CIECLE && myShape.collisionGroup == GraphicShape.LINE) {
             Score.I.addScore();
+            myShape.collisionMask = null;
         }
         else {
         }
     };
     CreateWorld.prototype.addDestroyMethod = function () { CreateWorld.world.clear(); };
     CreateWorld.prototype.updateContent = function () { };
-    CreateWorld.prototype.collisionEvent = function () { };
     CreateWorld.I = null;
     return CreateWorld;
 }(PhysicsObject));

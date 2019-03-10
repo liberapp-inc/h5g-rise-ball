@@ -97,8 +97,8 @@ var MyBall = (function (_super) {
     MyBall.prototype.updateContent = function () {
         this.updateDrowShape(this.body.position[0], this.body.position[1], this.radius);
     };
-    MyBall.prototype.collisionEvent = function () { };
     MyBall.I = null;
+    MyBall.collisionFlag = false;
     return MyBall;
 }(PhysicsBall));
 __reflect(MyBall.prototype, "MyBall");

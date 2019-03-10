@@ -132,6 +132,7 @@ class MyBox extends PhysicsBox {
         MoveDisplay.display.addChild(this.shape);
         if(this.shape.y > 2 * Game.height){
             this.body.position[1] -= Game.height*3;
+
         }
         
         
@@ -150,7 +151,6 @@ class MyBox extends PhysicsBox {
         this.updateBodyShape();
         //this.sideMove();
     }
-    collisionEvent(){}
 }
 
 class RightBox extends MyBox{

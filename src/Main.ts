@@ -17,7 +17,7 @@ class Main extends eui.UILayer {
  
     private addToStage() {
         GameObject.initial(this.stage);
-        //MainCamera.initial(this.stage);
+        Util.init(this);//euiレイヤーのサイズの取得
         Game.init();
         egret.startTick(this.tickLoop, this);
     }
@@ -46,8 +46,8 @@ class Game{
         new Background();
         new MoveDisplay();
         new CreateWorld();
-        new MyBall(Game.width/2,Game.height-50,50);
         new CreateObject();
+        new MyBall(Game.width/2,Game.height-50,50);
         new Score();
 
     }
@@ -80,7 +80,7 @@ class CreateWorld extends PhysicsObject{
         CreateWorld.I = this;
         this.createWorld();
         CreateWorld.world.on("beginContact",  this.collision, this);
-
+        CreateWorld.world.on("endContact",  this.collisionEnd, this);
     }
     createWorld(){
         CreateWorld.world = new p2.World();
@@ -109,31 +109,36 @@ class CreateWorld extends PhysicsObject{
 
     }
 
+    collisionEnd(){
+            
+    }
+
     checkShape(myShape :p2.Shape, yourShape : p2.Shape){
 
         //BallとBoxがぶつかったらゲームオーバー
         if(myShape.collisionGroup == GraphicShape.CIECLE && yourShape.collisionGroup == GraphicShape.BOX){
             Game.gameOverFlag = true;
-            if(Game.gameOverFlag === true){
-
+            if(Game.gameOverFlag){
                 new GameOver();
             }
 
         }
         else if(yourShape.collisionGroup == GraphicShape.CIECLE && myShape.collisionGroup == GraphicShape.BOX){
             Game.gameOverFlag = true;
-            if(Game.gameOverFlag === true){
-
+            if(Game.gameOverFlag){
                 new GameOver();
             }
         }
         //BallとLineがぶつかったらスコア加算
         else if(myShape.collisionGroup == GraphicShape.CIECLE && yourShape.collisionGroup == GraphicShape.LINE){
             Score.I.addScore();
-          
+            
+            yourShape.collisionMask = GraphicShape.NONE;
+
         }
         else if(yourShape.collisionGroup == GraphicShape.CIECLE && myShape.collisionGroup == GraphicShape.LINE){
             Score.I.addScore();
+            myShape.collisionMask = null;
         }
         else{
 
@@ -146,7 +151,6 @@ class CreateWorld extends PhysicsObject{
     addDestroyMethod(){CreateWorld.world.clear();}
 
     updateContent(){}
-    collisionEvent(){}
 
 }
 

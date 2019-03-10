@@ -13,7 +13,7 @@ class Score extends GameObject{
 
         Score.I = this;
         this.score = 0;
-        this.text = Utility.myText(0, 0, "SCORE : 0", 50, 0.5, 0x0080ff, true);
+        this.text = Util.myText(0, 0, "SCORE : 0", 50, 0.5, 0x0080ff, true);
         GameObject.display.addChild( this.text );
 
         let bestScore = egret.localStorage.getItem("bestScore"); // string
@@ -22,7 +22,7 @@ class Score extends GameObject{
             egret.localStorage.setItem("bestScore", bestScore);
         }
         this.bestScore = parseInt( bestScore );
-        this.textBest = Utility.myText(0, 30, "BEST : " + bestScore, 50, 0.5, 0x0080ff, true);
+        this.textBest = Util.myText(0, 30, "BEST : " + bestScore, 50, 0.5, 0x0080ff, true);
         GameObject.display.addChild( this.textBest );
     }
     

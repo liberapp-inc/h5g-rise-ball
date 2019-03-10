@@ -57,7 +57,9 @@ __reflect(PhysicsLine.prototype, "PhysicsLine");
 var ScoreLine = (function (_super) {
     __extends(ScoreLine, _super);
     function ScoreLine(x, y, length, angle, color) {
-        return _super.call(this, x, y, length, angle, color) || this;
+        var _this = _super.call(this, x, y, length, angle, color) || this;
+        _this.collisionFlag = false;
+        return _this;
     }
     ScoreLine.prototype.setShape = function (length, angle) {
         if (this.shape) {
@@ -80,6 +82,9 @@ var ScoreLine = (function (_super) {
         MoveDisplay.display.addChild(this.shape);
         if (this.shape.y > 2 * Game.height) {
             this.body.position[1] -= Game.height * 3;
+            if (this.bodyShape.collisionMask == null) {
+                this.bodyShape.collisionMask = GraphicShape.CIECLE;
+            }
         }
     };
     ScoreLine.prototype.addDestroyMethod = function () {

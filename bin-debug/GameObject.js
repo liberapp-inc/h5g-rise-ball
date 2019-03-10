@@ -69,6 +69,7 @@ var PhysicsObject = (function (_super) {
         _this.bodyShape = null;
         return _this;
     }
+    //abstract collisionEvent():void;
     PhysicsObject.prototype.addDestroyMethod = function () {
         CreateWorld.world.removeBody(this.body);
     };

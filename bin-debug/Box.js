@@ -122,7 +122,6 @@ var MyBox = (function (_super) {
         this.updateBodyShape();
         //this.sideMove();
     };
-    MyBox.prototype.collisionEvent = function () { };
     MyBox.sideMoveSpeed = 2;
     return MyBox;
 }(PhysicsBox));

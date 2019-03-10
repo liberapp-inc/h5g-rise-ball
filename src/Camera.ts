@@ -35,7 +35,8 @@ class MoveDisplay extends GameObject{
         MoveDisplay.display = new egret.DisplayObjectContainer();
         GameObject.display.addChild(MoveDisplay.display);
         MoveDisplay.moveSpeed[0]= 0;
-        MoveDisplay.moveSpeed[1]= 2;       
+        MoveDisplay.moveSpeed[1]= 2; 
+             
         
     }
 
