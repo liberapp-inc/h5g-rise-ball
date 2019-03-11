@@ -96,8 +96,13 @@ class MyBox extends PhysicsBox {
 
     private moveDisplayPosX : number;
     private moveDisplayPosY : number;
-    protected static sideMoveSpeed : number = 2;
+    static sideMoveSpeed : number = 2;
+    public mySideSpeed :number = 1;
     protected rightMoveFlag : boolean = true;
+    protected boxType: number = BoxType.NORMAL;
+    static normalBoxColor : number = 0xff0000;
+    static boldBoxColor : number = 0x8a2be2;
+    static fastBoxColor : number = 0x7fff00;
 
     constructor(x : number, y : number, width : number, height : number, color:number){
         super(x,y, width, height, color);
@@ -132,7 +137,8 @@ class MyBox extends PhysicsBox {
         MoveDisplay.display.addChild(this.shape);
         if(this.shape.y > 2 * Game.height){
             this.body.position[1] -= Game.height*3;
-
+            //画面外で一度削除
+            this.destroy();
         }
         
         
@@ -147,9 +153,9 @@ class MyBox extends PhysicsBox {
 
     }
 
+
     updateContent(){
         this.updateBodyShape();
-        //this.sideMove();
     }
 }
 
@@ -161,17 +167,86 @@ class RightBox extends MyBox{
 
     protected sideMove(){
         if(this.rightMoveFlag === true){
-            this.shape.x += MyBox.sideMoveSpeed;
-            this.body.position[0] += MyBox.sideMoveSpeed;
+            this.shape.x += MyBox.sideMoveSpeed * this.mySideSpeed;
+            this.body.position[0] += MyBox.sideMoveSpeed* this.mySideSpeed;
             if(this.shape.x >= Game.width){this.rightMoveFlag = false;}
         }
         else if(this.rightMoveFlag === false){
-            this.shape.x -= MyBox.sideMoveSpeed;
-            this.body.position[0] -= MyBox.sideMoveSpeed;
+            this.shape.x -= MyBox.sideMoveSpeed * this.mySideSpeed;
+            this.body.position[0] -= MyBox.sideMoveSpeed * this.mySideSpeed;
             if(this.shape.x <= Game.width/2 + this.shape.width/2){this.rightMoveFlag = true;}
         }
     }
 
+//Boxの種類を変更。RightBoxとLeftはここで同時に変更している。
+    protected changeBoxType(){
+
+        this.boxType = Util.randomInt(0,2);
+
+        switch(this.boxType){
+            case BoxType.NORMAL:
+                const nr = new RightBox(Game.width, -Game.height, 300, 50, MyBox.normalBoxColor);
+                const nl = new LeftBox(0, -Game.height, 300, 50, MyBox.normalBoxColor);
+
+                switch(Game.stageLevel){
+                    case StageLevel.ONE:
+                        nr.mySideSpeed = 1;
+                    break;
+                    case StageLevel.TWO:
+                        nr.mySideSpeed = 1.5;
+                    break;
+                    case StageLevel.THREE:
+                        nr.mySideSpeed = 2;
+                    break;
+
+                }
+
+                nl.mySideSpeed = nr.mySideSpeed;
+
+            break;
+
+            case BoxType.BOLD:
+                const br = new RightBox(Game.width, -Game.height, 300, 300, MyBox.boldBoxColor);
+                const bl = new LeftBox(0, -Game.height, 300, 300, MyBox.boldBoxColor);
+
+                switch(Game.stageLevel){
+                    case StageLevel.ONE:
+                        br.mySideSpeed = 0.5;
+                    break;
+                    case StageLevel.TWO:
+                        br.mySideSpeed = 1;
+                    break;
+                    case StageLevel.THREE:
+                        br.mySideSpeed = 1.5;
+                    break;
+
+                }
+
+                bl.mySideSpeed = br.mySideSpeed;
+
+            break;
+            case BoxType.FAST:
+                const fr = new RightBox(Game.width, -Game.height, 300, 30, MyBox.fastBoxColor);
+                const fl = new LeftBox(0, -Game.height, 300, 30, MyBox.fastBoxColor);
+
+                switch(Game.stageLevel){
+                    case StageLevel.ONE:
+                        fr.mySideSpeed = 2;
+                    break;
+                    case StageLevel.TWO:
+                        fr.mySideSpeed = 2.5;
+                    break;
+                    case StageLevel.THREE:
+                        fr.mySideSpeed = 3;
+                    break;
+
+                }
+
+                fl.mySideSpeed = fr.mySideSpeed;
+
+            break;
+        }
+    }
 
 
     updateContent(){
@@ -179,6 +254,9 @@ class RightBox extends MyBox{
             this.updateBodyShape();
             this.sideMove();
 
+            if(this.shape.y > 2 * Game.height){
+                this.changeBoxType();
+            }
         }
     }    
     
@@ -193,13 +271,13 @@ class LeftBox extends MyBox{
 
     protected sideMove(){
         if(this.rightMoveFlag === true){
-            this.shape.x += MyBox.sideMoveSpeed;
-            this.body.position[0] += MyBox.sideMoveSpeed;
+            this.shape.x += MyBox.sideMoveSpeed* this.mySideSpeed;
+            this.body.position[0] += MyBox.sideMoveSpeed* this.mySideSpeed;
             if(this.shape.x >= Game.width/2 - this.shape.width/2){this.rightMoveFlag = false;}
         }
         else if(this.rightMoveFlag === false){
-            this.shape.x -= MyBox.sideMoveSpeed;
-            this.body.position[0] -= MyBox.sideMoveSpeed;
+            this.shape.x -= MyBox.sideMoveSpeed* this.mySideSpeed;
+            this.body.position[0] -= MyBox.sideMoveSpeed* this.mySideSpeed;
             if(this.shape.x <= 0){this.rightMoveFlag = true;}
         }
     }

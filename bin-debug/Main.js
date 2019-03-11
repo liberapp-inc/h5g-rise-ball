@@ -17,6 +17,20 @@ var GraphicShape;
     GraphicShape[GraphicShape["LINE"] = Math.pow(2, 3)] = "LINE";
     GraphicShape[GraphicShape["DEAD_LINE"] = Math.pow(2, 4)] = "DEAD_LINE";
 })(GraphicShape || (GraphicShape = {}));
+//Boxの種類
+var BoxType;
+(function (BoxType) {
+    BoxType[BoxType["NORMAL"] = 0] = "NORMAL";
+    BoxType[BoxType["BOLD"] = 1] = "BOLD";
+    BoxType[BoxType["FAST"] = 2] = "FAST";
+})(BoxType || (BoxType = {}));
+//stageLevelの段階
+var StageLevel;
+(function (StageLevel) {
+    StageLevel[StageLevel["ONE"] = 0] = "ONE";
+    StageLevel[StageLevel["TWO"] = 1] = "TWO";
+    StageLevel[StageLevel["THREE"] = 2] = "THREE";
+})(StageLevel || (StageLevel = {}));
 var Main = (function (_super) {
     __extends(Main, _super);
     function Main() {
@@ -54,6 +68,7 @@ var Game = (function () {
         new Score();
     };
     Game.gameOverFlag = false;
+    Game.stageLevel = StageLevel.ONE;
     return Game;
 }());
 __reflect(Game.prototype, "Game");
@@ -138,22 +153,33 @@ var CreateObject = (function (_super) {
     __extends(CreateObject, _super);
     function CreateObject() {
         var _this = _super.call(this) || this;
-        _this.box = [];
         _this.createBox();
         return _this;
     }
     CreateObject.prototype.createBox = function () {
         for (var i = 0; i < 6; i++) {
             var posY = Game.height / 2;
-            var rb = new RightBox(Game.width, -2 * Game.height + posY * i, 300, 50, 0xff0000);
-            var lb = new LeftBox(0, -2 * Game.height + posY * i, 300, 50, 0xff0000);
-            var l = new ScoreLine(Game.width / 2, -2 * Game.height + posY * i, Game.width, 0, 0xff0000);
-            this.box.push(rb);
-            this.box.push(lb);
-            this.box.push(l);
+            new ScoreLine(Game.width / 2, -2 * Game.height + posY * i, Game.width, 0, ScoreLine.scoreLineColor);
+            new RightBox(Game.width, -2 * Game.height + posY * i, 300, 50, MyBox.normalBoxColor);
+            new LeftBox(0, -2 * Game.height + posY * i, 300, 50, MyBox.normalBoxColor);
         }
     };
-    CreateObject.prototype.updateContent = function () { };
+    CreateObject.prototype.updateContent = function () {
+        switch (Score.I.score) {
+            case 0:
+                Game.stageLevel = StageLevel.ONE;
+                MyBox.sideMoveSpeed = 2;
+                break;
+            case 5:
+                Game.stageLevel = StageLevel.TWO;
+                MyBox.sideMoveSpeed = 2;
+                break;
+            case 10:
+                Game.stageLevel = StageLevel.THREE;
+                MyBox.sideMoveSpeed = 4;
+                break;
+        }
+    };
     return CreateObject;
 }(GameObject));
 __reflect(CreateObject.prototype, "CreateObject");

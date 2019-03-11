@@ -63,6 +63,7 @@ abstract class PhysicsLine extends PhysicsObject{
 class ScoreLine extends PhysicsLine {
 
     public collisionFlag:boolean = false;
+    static scoreLineColor :number = 0xff0000;
 
     constructor(x : number, y : number, length : number, angle : number, color:number){
         super(x, y, length, angle, color);

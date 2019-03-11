@@ -31,7 +31,10 @@ var GameOver = (function (_super) {
         GameObject.display.removeChild(this.textScore);
         this.textScore = null;
     };
-    GameOver.prototype.updateContent = function () { };
+    GameOver.prototype.updateContent = function () {
+        GameObject.display.addChild(this.textGameOver);
+        GameObject.display.addChild(this.textScore);
+    };
     GameOver.prototype.tap = function (e) {
         GameObject.display.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, function (e) { return MyBall.touch(e); }, false);
         GameObject.transit = Game.init;

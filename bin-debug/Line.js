@@ -99,6 +99,7 @@ var ScoreLine = (function (_super) {
         }
     };
     ScoreLine.prototype.collisionEvent = function () { };
+    ScoreLine.scoreLineColor = 0xff0000;
     return ScoreLine;
 }(PhysicsLine));
 __reflect(ScoreLine.prototype, "ScoreLine");

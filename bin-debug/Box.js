@@ -81,7 +81,9 @@ var MyBox = (function (_super) {
     __extends(MyBox, _super);
     function MyBox(x, y, width, height, color) {
         var _this = _super.call(this, x, y, width, height, color) || this;
+        _this.mySideSpeed = 1;
         _this.rightMoveFlag = true;
+        _this.boxType = BoxType.NORMAL;
         _this.moveDisplayPosX = MoveDisplay.display.x;
         _this.moveDisplayPosY = MoveDisplay.display.y;
         return _this;
@@ -110,6 +112,8 @@ var MyBox = (function (_super) {
         MoveDisplay.display.addChild(this.shape);
         if (this.shape.y > 2 * Game.height) {
             this.body.position[1] -= Game.height * 3;
+            //画面外で一度削除
+            this.destroy();
         }
     };
     MyBox.prototype.addDestroyMethod = function () {
@@ -120,9 +124,11 @@ var MyBox = (function (_super) {
     };
     MyBox.prototype.updateContent = function () {
         this.updateBodyShape();
-        //this.sideMove();
     };
     MyBox.sideMoveSpeed = 2;
+    MyBox.normalBoxColor = 0xff0000;
+    MyBox.boldBoxColor = 0x8a2be2;
+    MyBox.fastBoxColor = 0x7fff00;
     return MyBox;
 }(PhysicsBox));
 __reflect(MyBox.prototype, "MyBox");
@@ -133,24 +139,81 @@ var RightBox = (function (_super) {
     }
     RightBox.prototype.sideMove = function () {
         if (this.rightMoveFlag === true) {
-            this.shape.x += MyBox.sideMoveSpeed;
-            this.body.position[0] += MyBox.sideMoveSpeed;
+            this.shape.x += MyBox.sideMoveSpeed * this.mySideSpeed;
+            this.body.position[0] += MyBox.sideMoveSpeed * this.mySideSpeed;
             if (this.shape.x >= Game.width) {
                 this.rightMoveFlag = false;
             }
         }
         else if (this.rightMoveFlag === false) {
-            this.shape.x -= MyBox.sideMoveSpeed;
-            this.body.position[0] -= MyBox.sideMoveSpeed;
+            this.shape.x -= MyBox.sideMoveSpeed * this.mySideSpeed;
+            this.body.position[0] -= MyBox.sideMoveSpeed * this.mySideSpeed;
             if (this.shape.x <= Game.width / 2 + this.shape.width / 2) {
                 this.rightMoveFlag = true;
             }
+        }
+    };
+    //Boxの種類を変更。RightBoxとLeftはここで同時に変更している。
+    RightBox.prototype.changeBoxType = function () {
+        this.boxType = Util.randomInt(0, 2);
+        switch (this.boxType) {
+            case BoxType.NORMAL:
+                var nr = new RightBox(Game.width, -Game.height, 300, 50, MyBox.normalBoxColor);
+                var nl = new LeftBox(0, -Game.height, 300, 50, MyBox.normalBoxColor);
+                switch (Game.stageLevel) {
+                    case StageLevel.ONE:
+                        nr.mySideSpeed = 1;
+                        break;
+                    case StageLevel.TWO:
+                        nr.mySideSpeed = 1.5;
+                        break;
+                    case StageLevel.THREE:
+                        nr.mySideSpeed = 2;
+                        break;
+                }
+                nl.mySideSpeed = nr.mySideSpeed;
+                break;
+            case BoxType.BOLD:
+                var br = new RightBox(Game.width, -Game.height, 300, 300, MyBox.boldBoxColor);
+                var bl = new LeftBox(0, -Game.height, 300, 300, MyBox.boldBoxColor);
+                switch (Game.stageLevel) {
+                    case StageLevel.ONE:
+                        br.mySideSpeed = 0.5;
+                        break;
+                    case StageLevel.TWO:
+                        br.mySideSpeed = 1;
+                        break;
+                    case StageLevel.THREE:
+                        br.mySideSpeed = 1.5;
+                        break;
+                }
+                bl.mySideSpeed = br.mySideSpeed;
+                break;
+            case BoxType.FAST:
+                var fr = new RightBox(Game.width, -Game.height, 300, 30, MyBox.fastBoxColor);
+                var fl = new LeftBox(0, -Game.height, 300, 30, MyBox.fastBoxColor);
+                switch (Game.stageLevel) {
+                    case StageLevel.ONE:
+                        fr.mySideSpeed = 2;
+                        break;
+                    case StageLevel.TWO:
+                        fr.mySideSpeed = 2.5;
+                        break;
+                    case StageLevel.THREE:
+                        fr.mySideSpeed = 3;
+                        break;
+                }
+                fl.mySideSpeed = fr.mySideSpeed;
+                break;
         }
     };
     RightBox.prototype.updateContent = function () {
         if (Game.gameOverFlag == false) {
             this.updateBodyShape();
             this.sideMove();
+            if (this.shape.y > 2 * Game.height) {
+                this.changeBoxType();
+            }
         }
     };
     return RightBox;
@@ -163,15 +226,15 @@ var LeftBox = (function (_super) {
     }
     LeftBox.prototype.sideMove = function () {
         if (this.rightMoveFlag === true) {
-            this.shape.x += MyBox.sideMoveSpeed;
-            this.body.position[0] += MyBox.sideMoveSpeed;
+            this.shape.x += MyBox.sideMoveSpeed * this.mySideSpeed;
+            this.body.position[0] += MyBox.sideMoveSpeed * this.mySideSpeed;
             if (this.shape.x >= Game.width / 2 - this.shape.width / 2) {
                 this.rightMoveFlag = false;
             }
         }
         else if (this.rightMoveFlag === false) {
-            this.shape.x -= MyBox.sideMoveSpeed;
-            this.body.position[0] -= MyBox.sideMoveSpeed;
+            this.shape.x -= MyBox.sideMoveSpeed * this.mySideSpeed;
+            this.body.position[0] -= MyBox.sideMoveSpeed * this.mySideSpeed;
             if (this.shape.x <= 0) {
                 this.rightMoveFlag = true;
             }

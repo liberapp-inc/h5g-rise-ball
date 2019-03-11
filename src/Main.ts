@@ -7,6 +7,20 @@ enum GraphicShape{
     DEAD_LINE = Math.pow(2,4),
 }
 
+//Boxの種類
+enum BoxType{
+    NORMAL,
+    BOLD,
+    FAST
+}
+
+//stageLevelの段階
+enum StageLevel{
+    ONE,
+    TWO,
+    THREE
+}
+
 class Main extends eui.UILayer {
 
 
@@ -36,6 +50,7 @@ class Game{
     public static height: number;
     public static width: number;
     static gameOverFlag : boolean = false;
+    static stageLevel : number = StageLevel.ONE;
 
     static init() {
         this.height = egret.MainContext.instance.stage.stageHeight;
@@ -156,8 +171,6 @@ class CreateWorld extends PhysicsObject{
 
 class CreateObject extends GameObject{
 
-    private box :Box[] = [];
-
     constructor(){
         super();
         this.createBox();
@@ -165,17 +178,32 @@ class CreateObject extends GameObject{
 
     createBox(){
         for(let i = 0; i < 6; i++){
-            let posY = Game.height/2
-            let rb = new RightBox(Game.width,-2 * Game.height + posY *i, 300, 50, 0xff0000);
-            let lb = new LeftBox(0, - 2 *Game.height + posY *i, 300, 50, 0xff0000);
-            let l = new ScoreLine(Game.width/2, -2 * Game.height + posY*i,Game.width,0, 0xff0000);
-            this.box.push(rb);
-            this.box.push(lb);
-            this.box.push(l);
+            let posY = Game.height/2;
+            new ScoreLine(Game.width/2, -2 * Game.height + posY*i,Game.width,0, ScoreLine.scoreLineColor);
+            new RightBox(Game.width,-2 * Game.height + posY *i, 300, 50, MyBox.normalBoxColor);
+            new LeftBox(0, - 2 *Game.height + posY *i, 300, 50, MyBox.normalBoxColor);
+
 
         }
     }
 
-    updateContent(){}
+    updateContent(){
+        switch(Score.I.score){
+            case 0:
+                Game.stageLevel = StageLevel.ONE;
+                MyBox.sideMoveSpeed = 2;
+
+                break;
+            case 5:
+                Game.stageLevel = StageLevel.TWO;
+                MyBox.sideMoveSpeed = 2;
+                
+            break;
+            case 10:
+                Game.stageLevel = StageLevel.THREE;
+                MyBox.sideMoveSpeed = 4;
+            break;
+        }
+    }
 
 }

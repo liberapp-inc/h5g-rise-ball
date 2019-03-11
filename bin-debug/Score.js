@@ -18,7 +18,7 @@ var Score = (function (_super) {
         _this.textBest = null;
         Score.I = _this;
         _this.score = 0;
-        _this.text = Util.myText(0, 0, "SCORE : 0", 50, 0.5, 0x0080ff, true);
+        _this.text = Util.myText(0, 0, "SCORE : 0", 100, 0.5, 0x0080ff, true);
         GameObject.display.addChild(_this.text);
         var bestScore = egret.localStorage.getItem("bestScore"); // string
         if (bestScore == null) {
@@ -26,7 +26,7 @@ var Score = (function (_super) {
             egret.localStorage.setItem("bestScore", bestScore);
         }
         _this.bestScore = parseInt(bestScore);
-        _this.textBest = Util.myText(0, 30, "BEST : " + bestScore, 50, 0.5, 0x0080ff, true);
+        _this.textBest = Util.myText(0, 50, "BEST : " + bestScore, 100, 0.5, 0x0080ff, true);
         GameObject.display.addChild(_this.textBest);
         return _this;
     }

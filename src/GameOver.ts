@@ -26,7 +26,11 @@ class GameOver extends GameObject{
         this.textScore = null;
     }
     
-    updateContent() { }
+    updateContent() {
+        GameObject.display.addChild( this.textGameOver );
+        GameObject.display.addChild( this.textScore );
+
+     }
 
     tap(e:egret.TouchEvent){
         GameObject.display.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, (e: egret.TouchEvent) => MyBall.touch(e), false);
