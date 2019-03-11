@@ -18,10 +18,10 @@ class Score extends GameObject{
         this.text = Util.myText(0, 0, "SCORE : 0", 100, 0.5, this.textColor, true);
         GameObject.display.addChild( this.text );
 
-        let bestScore = egret.localStorage.getItem("bestScore"); // string
+        let bestScore = window.localStorage.getItem("bestScore_ThroughTheGate"); // string
         if( bestScore == null ){
             bestScore = "0";
-            egret.localStorage.setItem("bestScore", bestScore);
+            window.localStorage.setItem("bestScore_ThroughTheGate", bestScore);
         }
         this.bestScore = parseInt( bestScore );
         this.textBest = Util.myText(0, 50, "BEST : " + bestScore, 100, 0.5, this.textColor, true);

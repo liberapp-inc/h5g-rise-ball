@@ -21,10 +21,10 @@ var Score = (function (_super) {
         _this.score = 0;
         _this.text = Util.myText(0, 0, "SCORE : 0", 100, 0.5, _this.textColor, true);
         GameObject.display.addChild(_this.text);
-        var bestScore = egret.localStorage.getItem("bestScore"); // string
+        var bestScore = window.localStorage.getItem("bestScore_ThroughTheGate"); // string
         if (bestScore == null) {
             bestScore = "0";
-            egret.localStorage.setItem("bestScore", bestScore);
+            window.localStorage.setItem("bestScore_ThroughTheGate", bestScore);
         }
         _this.bestScore = parseInt(bestScore);
         _this.textBest = Util.myText(0, 50, "BEST : " + bestScore, 100, 0.5, _this.textColor, true);

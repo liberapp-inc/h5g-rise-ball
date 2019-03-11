@@ -24,7 +24,7 @@ var GameOver = (function (_super) {
         _this.textScore.anchorOffsetY = _this.textScore.height / 2;
         GameObject.display.addChild(_this.textScore);
         if (Score.I.score >= Score.I.bestScore) {
-            egret.localStorage.setItem("bestScore", Score.I.score.toFixed()); // string
+            window.localStorage.setItem("bestScore_ThroughTheGate", Score.I.score.toFixed()); // string
         }
         GameObject.display.once(egret.TouchEvent.TOUCH_TAP, function (e) { return _this.tap(e); }, _this);
         return _this;
