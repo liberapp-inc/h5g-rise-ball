@@ -8,12 +8,14 @@ class Score extends GameObject{
     text:egret.TextField = null;
     textBest:egret.TextField = null;
 
+    textColor : number = 0x00FF3B;
+
     constructor() {
         super();
 
         Score.I = this;
         this.score = 0;
-        this.text = Util.myText(0, 0, "SCORE : 0", 100, 0.5, 0x0080ff, true);
+        this.text = Util.myText(0, 0, "SCORE : 0", 100, 0.5, this.textColor, true);
         GameObject.display.addChild( this.text );
 
         let bestScore = egret.localStorage.getItem("bestScore"); // string
@@ -22,7 +24,7 @@ class Score extends GameObject{
             egret.localStorage.setItem("bestScore", bestScore);
         }
         this.bestScore = parseInt( bestScore );
-        this.textBest = Util.myText(0, 50, "BEST : " + bestScore, 100, 0.5, 0x0080ff, true);
+        this.textBest = Util.myText(0, 50, "BEST : " + bestScore, 100, 0.5, this.textColor, true);
         GameObject.display.addChild( this.textBest );
     }
     

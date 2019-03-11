@@ -174,8 +174,8 @@ var RightBox = (function (_super) {
                 nl.mySideSpeed = nr.mySideSpeed;
                 break;
             case BoxType.BOLD:
-                var br = new RightBox(Game.width, -Game.height, 300, 300, MyBox.boldBoxColor);
-                var bl = new LeftBox(0, -Game.height, 300, 300, MyBox.boldBoxColor);
+                var br = new RightBox(Game.width, -Game.height, 300, 250, MyBox.boldBoxColor);
+                var bl = new LeftBox(0, -Game.height, 300, 250, MyBox.boldBoxColor);
                 switch (Game.stageLevel) {
                     case StageLevel.ONE:
                         br.mySideSpeed = 0.5;

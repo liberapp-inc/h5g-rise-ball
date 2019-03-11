@@ -206,8 +206,8 @@ class RightBox extends MyBox{
             break;
 
             case BoxType.BOLD:
-                const br = new RightBox(Game.width, -Game.height, 300, 300, MyBox.boldBoxColor);
-                const bl = new LeftBox(0, -Game.height, 300, 300, MyBox.boldBoxColor);
+                const br = new RightBox(Game.width, -Game.height, 300, 250, MyBox.boldBoxColor);
+                const bl = new LeftBox(0, -Game.height, 300, 250, MyBox.boldBoxColor);
 
                 switch(Game.stageLevel){
                     case StageLevel.ONE:
