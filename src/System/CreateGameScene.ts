@@ -6,7 +6,6 @@ class CreateGameScene extends GameObject{
 
     static rightBlock : Block[] = [];
     static leftBlock : Block[] = [];
-    //private scoreSpeed : number = 0;
     private blockMoveSpeed : number = 5;
     private normalBlockHeight : number;
     private boldBlockHeight : number;

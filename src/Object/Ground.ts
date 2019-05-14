@@ -1,8 +1,5 @@
 class Ground extends PhysicsObject{
 
-    //static I : Ball = null;
-    //private radius : number = null;
-
     constructor(x : number, y : number, length:number, degree : number, lineWidth:number, lineColor :number) {
         super(x,y,length,lineWidth);
         this.setBody(x, y,length,lineWidth);
@@ -14,15 +11,7 @@ class Ground extends PhysicsObject{
 
         const shape:egret.Shape = Util.setLine(x,y,length,degree,lineWidth,color);
         this.compornent.addChild(shape);
-        //GameStage.display.addChild(this.compornent);
         this.shapes.push(shape);
-
-/*        const shape : egret.Shape = Util.setRect(x,y,width,height,color,0,true);
-        this.compornent.addChild(shape);
-        this.shapes.push(shape);
-        
-        this.compornent.anchorOffsetX += width/2;
-        this.compornent.anchorOffsetY += height/2;*/
 
     }
 
