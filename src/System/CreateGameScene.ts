@@ -29,8 +29,8 @@ class CreateGameScene extends GameObject{
 
 
     private initialBlock(){
-        new ScoreLine(0, -Game.height * 0, Game.width, 0, 4, ColorPallet.BLUE);
-        new ScoreLine(0, -Game.height * 1, Game.width, 0, 4, ColorPallet.BLUE);
+        new ScoreLine(0, -Game.height * 0, Game.width, 0, 4, ColorPallet.GREEN);
+        new ScoreLine(0, -Game.height * 1, Game.width, 0, 4, ColorPallet.GREEN);
         new Block(0,            0,              Game.width/2, this.normalBlockHeight, this.setMoveSpeed(BlockType.NOMAL));
         new Block(Game.width,   0,              Game.width/2, this.normalBlockHeight, this.setMoveSpeed(BlockType.NOMAL));
         new Block(0,            -Game.height,   Game.width/2, this.normalBlockHeight, this.setMoveSpeed(BlockType.NOMAL));
@@ -48,17 +48,17 @@ class CreateGameScene extends GameObject{
             
             switch(blockType){
                 case BlockType.NOMAL:
-                    new ScoreLine(0,    y, Game.width, 0, 4, ColorPallet.BLUE);
+                    new ScoreLine(0,    y, Game.width, 0, 4, ColorPallet.GREEN);
                     new Block(x,                y, Game.width/2, this.normalBlockHeight, this.setMoveSpeed(blockType));
                     new Block(Game.width - x,   y, Game.width/2, this.normalBlockHeight, this.setMoveSpeed(blockType));
                 break;
                 case BlockType.BOLD:
-                    new ScoreLine(0,    y, Game.width, 0, 4, ColorPallet.BLUE);
+                    new ScoreLine(0,    y, Game.width, 0, 4, ColorPallet.GREEN);
                     new Block(x,                y, Game.width/2, this.boldBlockHeight, this.setMoveSpeed(blockType));
                     new Block(Game.width - x,   y, Game.width/2, this.boldBlockHeight, this.setMoveSpeed(blockType));
                 break;
                 case BlockType.SPEED:
-                    new ScoreLine(0,    y, Game.width, 0, 4, ColorPallet.BLUE);
+                    new ScoreLine(0,    y, Game.width, 0, 4, ColorPallet.GREEN);
                     new Block(x,                y, Game.width/2, this.speedBlockHeight, this.setMoveSpeed(blockType));
                     new Block(Game.width - x,   y, Game.width/2, this.speedBlockHeight, this.setMoveSpeed(blockType));
                 break;

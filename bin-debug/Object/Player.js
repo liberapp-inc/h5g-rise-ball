@@ -91,6 +91,9 @@ var Player = (function (_super) {
         var power = 6000;
         this.body.applyForceLocal([0, -power], [0, 0]);
     };
+    Player.prototype.addDestroyPhysicsMethod = function () {
+        PhysicsObject.world.off("beginContact", this.collision);
+    };
     Player.I = null;
     return Player;
 }(PhysicsObject));

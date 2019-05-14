@@ -20,7 +20,7 @@ var Block = (function (_super) {
         var _this = _super.call(this, x, y, width, height) || this;
         _this.moveSpeed = 0;
         _this.setBody(x, y, width, height);
-        _this.setShape(0, 0, width, height, ColorPallet.BLUE);
+        _this.setShape(0, 0, width, height, ColorPallet.GREEN);
         if (x < Game.width / 2) {
             _this.toRight = true;
             CreateGameScene.leftBlock.push(_this);

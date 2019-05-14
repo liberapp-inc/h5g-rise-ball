@@ -12,7 +12,7 @@ class Block extends PhysicsObject{
     constructor(x : number, y:number, width:number, height:number, moveSpeed : number) {
         super(x, y, width,height);
         this.setBody(x,y,width,height);
-        this.setShape(0, 0, width,height,ColorPallet.BLUE);
+        this.setShape(0, 0, width,height,ColorPallet.GREEN);
         if(x < Game.width/2){
             this.toRight = true;
             CreateGameScene.leftBlock.push(this);

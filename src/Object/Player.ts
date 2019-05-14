@@ -102,6 +102,9 @@ class Player extends PhysicsObject{
 
     }
 
+    addDestroyPhysicsMethod(){
+        PhysicsObject.world.off("beginContact", this.collision);        
+    }
 
 }
 

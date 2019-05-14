@@ -2,7 +2,7 @@ class GameOver extends UICompornent{
 
     textGameOver:eui.Label = null;
     textScore:eui.Label = null;
-    textColor : number = ColorPallet.GOLD;
+    textColor : number = ColorPallet.RED;
     static gameOverFlag : boolean = false;
 
     constructor(x : number, y : number, width : number, height : number) {

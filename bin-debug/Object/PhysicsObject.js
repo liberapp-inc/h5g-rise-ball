@@ -31,8 +31,6 @@ var PhysicsObject = (function (_super) {
     PhysicsObject.prepare = function (pixelPerMeter) {
         PhysicsObject.pixelPerMeter = pixelPerMeter;
         PhysicsObject.meterPerPixel = 1 / pixelPerMeter;
-        /*        PhysicsObject.width  = PhysicsObject.pixelToMeter(Util.width);
-                PhysicsObject.height = PhysicsObject.pixelToMeter(Util.height);*/
         PhysicsObject.world = new p2.World();
         PhysicsObject.world.gravity = [0, 9.8];
     };
