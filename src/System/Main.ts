@@ -1,9 +1,9 @@
+
 enum ColorPallet{
-
     WHITE = 0xffffff,
-    GREEN = 0x80bd9e,
-    RED = 0xf16b6f,
-
+    GREEN = 0x73ae43,
+    RED = 0xe44642,
+    ORANGE = 0xdf8731,
 }
 const PIXEL_PER_METER = 1;
 
@@ -52,8 +52,8 @@ class Game{
         new UILayer();
         new Ground(0,Game.height-200,Game.width,0,4,ColorPallet.GREEN);
         new Player(Game.width/2,Game.height-250,Game.width*0.1);
-        new Score(0,0,0,0, ColorPallet.RED);
-        new Description(0,0,0,0, ColorPallet.RED);
+        new Score(0,0,0,0, ColorPallet.ORANGE);
+        new Description(0,0,0,0, ColorPallet.ORANGE);
         new CreateGameScene();
         
     }

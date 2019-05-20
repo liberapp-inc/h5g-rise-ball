@@ -89,7 +89,7 @@ var Player = (function (_super) {
     };
     Player.prototype.jump = function () {
         var power = 6000;
-        this.body.applyForceLocal([0, -power], [0, 0]);
+        this.body.applyForce([0, -power], [0, 0]);
     };
     Player.prototype.addDestroyPhysicsMethod = function () {
         PhysicsObject.world.off("beginContact", this.collision);

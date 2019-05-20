@@ -11,8 +11,9 @@ r.prototype = e.prototype, t.prototype = new r();
 var ColorPallet;
 (function (ColorPallet) {
     ColorPallet[ColorPallet["WHITE"] = 16777215] = "WHITE";
-    ColorPallet[ColorPallet["GREEN"] = 8437150] = "GREEN";
-    ColorPallet[ColorPallet["RED"] = 15821679] = "RED";
+    ColorPallet[ColorPallet["GREEN"] = 7581251] = "GREEN";
+    ColorPallet[ColorPallet["RED"] = 14960194] = "RED";
+    ColorPallet[ColorPallet["ORANGE"] = 14649137] = "ORANGE";
 })(ColorPallet || (ColorPallet = {}));
 var PIXEL_PER_METER = 1;
 var Main = (function (_super) {
@@ -53,8 +54,8 @@ var Game = (function () {
         new UILayer();
         new Ground(0, Game.height - 200, Game.width, 0, 4, ColorPallet.GREEN);
         new Player(Game.width / 2, Game.height - 250, Game.width * 0.1);
-        new Score(0, 0, 0, 0, ColorPallet.RED);
-        new Description(0, 0, 0, 0, ColorPallet.RED);
+        new Score(0, 0, 0, 0, ColorPallet.ORANGE);
+        new Description(0, 0, 0, 0, ColorPallet.ORANGE);
         new CreateGameScene();
     };
     return Game;

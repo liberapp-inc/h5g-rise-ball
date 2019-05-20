@@ -12,7 +12,6 @@ var CreateGameScene = (function (_super) {
     __extends(CreateGameScene, _super);
     function CreateGameScene() {
         var _this = _super.call(this) || this;
-        //private scoreSpeed : number = 0;
         _this.blockMoveSpeed = 5;
         CreateGameScene.createPosY = Game.height;
         CreateGameScene.scoreLine = [];

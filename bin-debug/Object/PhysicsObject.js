@@ -32,7 +32,7 @@ var PhysicsObject = (function (_super) {
         PhysicsObject.pixelPerMeter = pixelPerMeter;
         PhysicsObject.meterPerPixel = 1 / pixelPerMeter;
         PhysicsObject.world = new p2.World();
-        PhysicsObject.world.gravity = [0, 9.8];
+        PhysicsObject.world.gravity = [0, 10.5];
     };
     //オーバーライド禁止
     PhysicsObject.prototype.updateContent = function () {

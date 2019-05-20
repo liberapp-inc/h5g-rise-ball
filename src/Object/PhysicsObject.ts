@@ -32,7 +32,7 @@ abstract class PhysicsObject extends GameCompornent {
         PhysicsObject.pixelPerMeter = pixelPerMeter;
         PhysicsObject.meterPerPixel = 1 / pixelPerMeter;
         PhysicsObject.world = new p2.World();
-        PhysicsObject.world.gravity = [0, 9.8];
+        PhysicsObject.world.gravity = [0, 10.5];
 
         
         

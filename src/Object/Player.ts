@@ -98,7 +98,7 @@ class Player extends PhysicsObject{
 
     jump(){
         const power : number = 6000;
-        this.body.applyForceLocal([0, -power],[0,0]);
+        this.body.applyForce([0, -power],[0,0]);
 
     }
 

@@ -10,8 +10,6 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var Ground = (function (_super) {
     __extends(Ground, _super);
-    //static I : Ball = null;
-    //private radius : number = null;
     function Ground(x, y, length, degree, lineWidth, lineColor) {
         var _this = _super.call(this, x, y, length, lineWidth) || this;
         _this.setBody(x, y, length, lineWidth);
@@ -21,14 +19,7 @@ var Ground = (function (_super) {
     Ground.prototype.setShape = function (x, y, length, degree, lineWidth, color) {
         var shape = Util.setLine(x, y, length, degree, lineWidth, color);
         this.compornent.addChild(shape);
-        //GameStage.display.addChild(this.compornent);
         this.shapes.push(shape);
-        /*        const shape : egret.Shape = Util.setRect(x,y,width,height,color,0,true);
-                this.compornent.addChild(shape);
-                this.shapes.push(shape);
-                
-                this.compornent.anchorOffsetX += width/2;
-                this.compornent.anchorOffsetY += height/2;*/
     };
     Ground.prototype.setBody = function (x, y, width, height) {
         this.body = new p2.Body({ mass: 1, position: [x, y], type: p2.Body.STATIC });
